@@ -1,0 +1,5 @@
+^LICENSE\.md$
+rSPRITE.Rproj
+NEWS.html
+^.*\.Rproj$
+^\.Rproj\.user$
