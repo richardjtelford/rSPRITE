@@ -21,9 +21,7 @@
 
 rSprite.app <- function(){
 
-
-
-  
+# default input values   
   N <- 45
   tMean <- 3.532
   tSD <- 1.561

@@ -33,7 +33,7 @@ server <- function (input, output, session) {
                  , "| ignored"
                  , sep=""
       )
-      rSprite.message(s, shinyType="warning")
+      rSprite.messageList <<- append(rSprite.messageList, rSprite.message(s, shinyType="warning"))
       result <- 0
     }
     
@@ -57,7 +57,7 @@ server <- function (input, output, session) {
                  , "| ignored"
                  , sep=""
       )
-      rSprite.message(s, shinyType="warning")
+      rSprite.messageList <<- append(rSprite.messageList, rSprite.message(s, shinyType="warning"))
       result <- 0
     }
     
@@ -69,7 +69,7 @@ server <- function (input, output, session) {
     set.seed(if (input$fixedSeed) 1 else as.numeric(Sys.time()))
     fixed <- rep(fixedResponse(), fixedCount())
     gridSize <- sqrt(as.numeric(input$gridSize))
-    
+
     rSprite.getSample(
       gridSize ^ 2
       , input$N
@@ -225,15 +225,18 @@ server <- function (input, output, session) {
           rSprite.message("Skipping rendering", showNow=TRUE)           # ... to speed up generation of test data.
         }
         else {
-          gridSize <- floor(sqrt(nrow(sample$rows)) + 0.999)
-          rSprite.buildCharts(sample, scaleMin, scaleMax, gridSize)
+          nCases <- nrow(sample$rows)
+          s <- paste0("Plotting ", nCases, " unique solution", (if (nCases == 1) "" else "s"), "...")
+          rSprite.message(s, showNow=TRUE)
+
+          rSprite.buildCharts(sample, scaleMin, scaleMax)
           rSprite.message("Rendering...", showNow=TRUE)
         }
         
         rSprite.plotData <<- sample$rows
       }
       
-      rSprite.shinyMessages(rSprite.messageList)
+      rSprite.notifIdList  <<- rSprite.shinyMessages(rSprite.messageList)
       rSprite.messageList <<- list()
     })
   }, height=function () {

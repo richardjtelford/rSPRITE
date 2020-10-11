@@ -43,7 +43,7 @@ rSprite.getSample <- function (
   nCases <- 0
   result$label <- rSprite.chartLabel(N, tMean, tSD, scaleMin, scaleMax, dp, (maxCases > 9))
   for (i in 1:(maxCases * rSprite.maxDupLoops)) {
-    vec <- rSprite.seekVector(N, tMean, tSD, scaleMin, scaleMax, dp, fixed, result$label, rSprite.dust = rSprite.dust)
+    vec <- rSprite.seekVector(N, tMean, tSD, scaleMin, scaleMax, dp, fixed, result$label, rSprite.dust = rSprite.dust, rSprite.huge = rSprite.huge)
     if (length(vec) == 0) {
       break                                 # we failed to find a case despite many tries
     }
